@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <title> {% block title %} Webpage Title {% endblock %}
-    </title> 
+    </title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/1-main.css') }}">
+
+    {% block head %}
+    {% endblock %}
+
 </head>
 
 <body>
     <div id = "header">
         {%  block header %}
         {% endblock %}
+    </div>
+
+    <div class="nav-right">
+            <a href="{{ url_for('home') }}" class="nav-button">Home</a>
+            <a href="{{ url_for('about') }}" class="nav-button">About Us</a>
+            <a href="{{ url_for('contact') }}" class="nav-button">Contact</a>
+            <a href="{{ url_for('login') }}" class="nav-button">Login</a>
+            <a href="{{ url_for('register') }}" class="nav-button">Register</a>
     </div>
 
     <div id ="content">
