@@ -1,8 +1,25 @@
 {% extends "base.html" %}
-{% block title %} Project Pomelo {% block title %}
-{% block header %} <link rel="stylesheet" href="1-main.css"> {% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='static/css/1-main.css')}}">
+{% endblock %} 
+
+
+{% block header %}
+<h1>Welcome to Project Pomelo</h1>
+{% endblock %}
 
 {% block content %}
 
-{% endblock}
+<div class="landing-bg">
+    <div class="landing-text">
+        <h2>Organize and Join Activities Easily</h2>
+        <p>Create events, sign up, and manage participation all in one place!</p>
+    </div>
+</div>
 
+{% endblock %}
