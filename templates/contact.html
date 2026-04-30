@@ -1,2 +1,24 @@
-{% extends base.html %}
-{% block title %} Contact Us {% endblock %}
+{% extends "base.html" %}
+
+{% block title %}
+Contact Us
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='static/css/1-main.css')}}">
+{% endblock %} 
+
+
+{% block header %}
+<h1>Contact Us</h1>
+{% endblock %}
+
+{% block content %}
+<div class="landing-bg">
+    <div class="landing-text">
+        <h2>Details:</h2>
+        <p>Email: projectpomelo@gmail.com </p>
+        <p>Instagram: project_pomeloo </p>
+    </div>
+</div>
+{% endblock %}

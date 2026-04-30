@@ -1,0 +1,32 @@
+.landing-bg {
+    background-image: url("../images/landing.png");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+}
+
+/* Navbar styling */
+.landing-nav {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    box-sizing: border-box;
+}
+
+.nav-links a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+/* Optional text overlay */
+.landing-text {
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    color: black;
+}

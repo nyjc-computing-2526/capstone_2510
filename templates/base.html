@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <title> {% block title %} Webpage Title {% endblock %}
-    </title> 
+    </title>
+
+    {% block head %}
+    {% endblock %}
+
 </head>
 
 <body>
@@ -10,6 +15,16 @@
         {%  block header %}
         {% endblock %}
     </div>
+
+    {% block navbar %}
+    <div class="nav-right">
+        <a href="{{ url_for('home') }}" class="nav-button">Home</a>
+        <a href="{{ url_for('about') }}" class="nav-button">About Us</a>
+        <a href="{{ url_for('contact') }}" class="nav-button">Contact</a>
+        <a href="{{ url_for('login') }}" class="nav-button">Login</a>
+        <a href="{{ url_for('register') }}" class="nav-button">Register</a>
+    </div>
+    {% endblock %}
 
     <div id ="content">
         {% block content %}
