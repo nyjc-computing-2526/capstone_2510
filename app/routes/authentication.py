@@ -1,10 +1,11 @@
 
-from flask import Blueprint, request
+from flask import Flask, request, render_template, redirect, session
 from app.services.auth_service import create_user, email_exists, get_user
 
-auth_bp = Blueprint("auth", __name__)
+app = Flask(__name__)
+app.secret_key = "2510_xx_xx"
 
-@auth_bp.route("/register", methods=["POST"])
+@app.route("/register", methods=["GET","POST"])
 def register():
     if request.method == "POST":
         email = request.form["email"]
@@ -12,15 +13,15 @@ def register():
 
 
         if email_exists(email):
-            return "Email already exists"
+            return render_template("register.html", msg="Email already exists!")
 
         create_user(email, password)
-        return redirect("/login")
+        return redirect("/login", msg="Registration successful. Please log in")
     else:
         return render_template("register.html")
 
 
-@auth_bp.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form["email"]
@@ -30,11 +31,11 @@ def login():
 
         # check if user exists
         if user is None:
-            return render_template("login.html", msg="User does not exist")
+            return render_template("login.html", msg="User does not exist!")
 
         # check password
         if user["password"] != password:
-            return render_template("login.html", msg="Wrong Password")
+            return render_template("login.html", msg="Wrong Password!")
 
         #store session
         session["user_id"] = user["id"]
@@ -43,3 +44,13 @@ def login():
         return redirect("/")
 
     return render_template("login.html")
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
+
+@app.context_processor
+def inject_user():
+    return dict(logged_in=session.get("user_id") is not None)
+

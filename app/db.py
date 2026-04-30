@@ -7,3 +7,13 @@ def get_db():
         password="xxx",
         database="capstone"
     )
+
+CREATE DATABASE capstone;
+
+USE capstone;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE,
+    password VARCHAR(255)
+);
