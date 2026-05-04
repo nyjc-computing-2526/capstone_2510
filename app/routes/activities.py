@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
+from app_obj import app
 import sqlite3
-app = Flask(_name_)
 
 @app.route('/activities')
 def activities():
