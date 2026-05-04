@@ -1,5 +1,5 @@
 .landing-bg {
-    background-image: url("../images/landing.png");
+    background-image: url("static/images/landing.png");
     background-size: cover;
     background-position: center;
     height: 100vh;
