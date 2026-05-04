@@ -1,13 +1,12 @@
-import mysql.connector
+import os
+import psycopg
+
+URL = os.getenv("DB_URL")
 
 def get_db():
-    return mysql.connector.connect(
-        host="localhost",
-        user="xxx", #to be filled in
-        password="xxx",
-        database="capstone"
-    )
+    return psycopg.connect(URL)
 
+"""
 CREATE DATABASE capstone;
 
 USE capstone;
@@ -17,3 +16,4 @@ CREATE TABLE users (
     email VARCHAR(255) UNIQUE,
     password VARCHAR(255)
 );
+"""

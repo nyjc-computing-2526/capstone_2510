@@ -5,7 +5,6 @@ from app_obj import app
 def landing():
     return render_template('landing.html')
 
-
 @app.route("/privacy_policy")
 def privacy():
     return render_template('privacy.html') #privacy.html not written yet

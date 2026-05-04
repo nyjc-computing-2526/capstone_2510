@@ -1,4 +1,4 @@
-from app.db import get_db
+from db import get_db
 
 def create_user(email, password):
     db = get_db()
