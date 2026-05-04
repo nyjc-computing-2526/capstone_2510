@@ -1,7 +1,5 @@
-from flask import Flask, request, render_template, redirect, session
-
-app = Flask(__name__)
-
+from flask import request, render_template, redirect, session
+from app_obj import app
 
 @app.route("/")
 def landing():

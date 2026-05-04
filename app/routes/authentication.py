@@ -1,16 +1,13 @@
 
 from flask import Flask, request, render_template, redirect, session
-from app.services.auth_service import create_user, email_exists, get_user
-
-app = Flask(__name__)
-app.secret_key = "2510_xx_xx"
+from services.auth_service import create_user, email_exists, get_user
+from app_obj import app
 
 @app.route("/register", methods=["GET","POST"])
 def register():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
-
 
         if email_exists(email):
             return render_template("register.html", msg="Email already exists!")
