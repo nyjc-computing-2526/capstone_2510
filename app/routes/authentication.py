@@ -38,7 +38,7 @@ def login():
         session["user_id"] = user["id"]
         session["email"] = user["email"]
 
-        return redirect("/")
+        return redirect("/activity")
 
     return render_template("login.html")
 
