@@ -1,0 +1,44 @@
+.landing-bg {
+    background-image: url("../images/landing.png");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+}
+
+
+.landing-nav {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px;
+    box-sizing: border-box;
+}
+
+.nav-links a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.content {
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    color: black;
+}
+
+
+.nav-button {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #ffffff;
+    background: linear-gradient(135deg, #4a90e2, #357ABD);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}

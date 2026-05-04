@@ -1,0 +1,17 @@
+{
+    "name": "Python 3.12",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "postCreateCommand": "",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python3"
+            },
+            "extensions": [
+                "ms-python.python"
+            ]
+        }
+    }
+}
