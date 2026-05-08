@@ -1,0 +1,52 @@
+{% extends 'base2.html' %}
+
+{% block title %} Create Activity {% endblock %}
+
+
+{% block navbar %}
+    <div class="landing-nav">
+		<a href="{{ url_for('activities') }}" class="nav-button">View Activities</a>
+        <a href="{{ url_for('createact') }}" class="nav-button">Create Activity</a>
+        <a href="{{ url_for('deleteact') }}" class="nav-button">Delete Activity</a>
+        <a href="{{ url_for('updateact') }}" class="nav-button">Update Activity</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+<h1>Create an activity</h1>
+
+<form method="POST">
+<table>
+	<tr>
+		<td><label for="Title">Activity Title:</label></td>
+		<td><input name="Title" id="Title" type="text"></td>
+	</tr>
+
+	<tr>
+		<td><label for="Date">Date:</label></td>
+		<td><input name="Date" id="Date" type="date"></td>
+	</tr>
+
+	<tr>
+		<td><label for="StartTime">Start Time:</label></td>
+		<td><input name="StartTime" id="StartTime" type="time"></td>
+	</tr>
+
+	<tr>
+		<td><label for="EndTime">End Time:</label></td>
+		<td><input name="EndTime" id="EndTime" type="time"></td>
+	</tr>
+
+	<tr>
+		<td><label for="Description">Activity Description:</label></td>
+		<td><input name="Description" id="Description" type="text"></td>
+	</tr>
+
+	<tr>
+		<td></td>
+		<td><input type="submit" value="Create"></td>
+	</tr>
+</table>
+</form>
+
+{% endblock %}

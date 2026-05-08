@@ -7,6 +7,15 @@
     padding-top: 100px; /* space for navbar */
 }
 
+#landing-bg2 {
+    background-image: url("../images/landing2.png");
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    position: relative;
+    padding-top: 100px; /* space for navbar */
+}
+
 .landing-nav {
     position: fixed; /* stays at top */
     top: 0;
@@ -37,4 +46,54 @@
     background: linear-gradient(135deg, #4a90e2, #357ABD);
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+table {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+td {
+    padding: 8px;
+}
+
+input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+input[type="submit"] {
+    background: #357ABD;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+input[type="submit"]:hover {
+    background: #2c5f9e;
+}
+
+
+/* privacy policy */
+.privacy-content {
+    width: 60%;
+    padding-top: 60px;
+    padding-left: 60px;
+    text-align: left;
+    color: black;
+}
+
+.privacy-content h1 {
+    font-size: 40px;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.privacy-content p {
+    font-size: 20px;
+    line-height: 1.8;
+    margin-bottom: 20px;
 }
