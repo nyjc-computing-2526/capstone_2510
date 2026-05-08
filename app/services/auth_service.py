@@ -75,15 +75,24 @@ def email_exists(email: str):
 
     return len(result) > 0
 
-def get_user(email: str) -> list:
+def get_user(email: str) -> list|None:
     """
     Fetches user info for provided email.
-    Make sure that the email is actually registered.
-    returns [id, name, email, passsword]
+    If user does not exist, returns None.
+    returns {id, name, email, passsword}
     """
     _, result = db_execute(
         "SELECT * FROM users WHERE email = %s",
         (email,)
     )
 
-    return list(result[0])
+    if len(result) == 0:
+        return None
+    else:
+        user = result[0]
+        return {
+            "id": user[0],
+            "name": user[1],
+            "email": user[2],
+            "password": user[3]
+        }

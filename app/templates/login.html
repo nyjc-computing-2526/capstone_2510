@@ -22,4 +22,11 @@ Home
         <button type="submit">Login</button>
     </form>
 </p>
+
+{% if msg %}
+    <p id="msg">
+        {{msg}}
+    </p>
+{% endif %}
+
 {% endblock %}

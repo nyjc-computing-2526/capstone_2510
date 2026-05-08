@@ -15,7 +15,7 @@ function validate(event) {
 
     if (password !== confirmPassword) {
         event.preventDefault();
-        alert("Passwords do not match!");
+        document.getElementById("msg").innerHTML = "Passwords do not match!"
     }
 }
 </script>
@@ -30,12 +30,18 @@ function validate(event) {
 {% block content %}
 <h2>Register an account!</h2>
 <p>
-    <form method="POST" onSubmit="validate(event)">
+    <form method="POST">
         Email: <input name="email" type="text"> <br />
         Name: <input name="name" type="text"> <br />
-        Password: <input name="password" id="password" type="password"> <br />
-        Re-enter password: <input name="password-again" id="password-again" type="password">
+        Password: <input name="password" type="password"> <br />
+        Re-enter password: <input name="password_again" type="password">
         <button type="submit">Register!</button>
-    </form>
+    </form> <br />
+
+    {% if msg %}
+        <p id="msg">
+            {{msg}}
+        </p>
+    {% endif %}
 </p>
 {% endblock %}
