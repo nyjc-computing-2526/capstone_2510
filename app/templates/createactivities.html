@@ -1,20 +1,19 @@
-{% extends 'base2.html' %}
+{% extends "base.html" %}
 
-{% block title %} Create Activity {% endblock %}
-
+{% block title %} Create activity {% endblock %}
 
 {% block navbar %}
-    <div class="landing-nav">
-		<a href="{{ url_for('activities') }}" class="nav-button">View Activities</a>
-        <a href="{{ url_for('createact') }}" class="nav-button">Create Activity</a>
-        <a href="{{ url_for('deleteact') }}" class="nav-button">Delete Activity</a>
-        <a href="{{ url_for('updateact') }}" class="nav-button">Update Activity</a>
-    </div>
+    <a href="{{ url_for('activities') }}" class="nav-button">View Activities</a>
+    <a href="{{ url_for('createact') }}" class="nav-button">Create Activity</a>
+    <a href="{{ url_for('deleteact') }}" class="nav-button">Delete Activity</a>
+    <a href="{{ url_for('updateact') }}" class="nav-button">Update Activity</a>
+{% endblock %}
+
+{% block header %}
+<h1>Create an activity</h1>
 {% endblock %}
 
 {% block content %}
-<h1>Create an activity</h1>
-
 <form method="POST">
 <table>
 	<tr>

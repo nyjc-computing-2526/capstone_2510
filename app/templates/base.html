@@ -4,7 +4,7 @@
     
     <title> {% block title %} Webpage Title {% endblock %}
     </title>
-    <link rel="stylesheet" href="static/css/1-main.css"/>
+    <link rel="stylesheet" href="/static/css/main.css"/>
 
     {% block head %}
     {% endblock %}
@@ -17,18 +17,20 @@
         {% endblock %}
     </div>
 
-    {% block navbar %}
     <div class="landing-nav">
+    {% block navbar %}
         <a href="{{ url_for('landing') }}" class="nav-button">Home</a>
         <a href="{{ url_for('privacy') }}" class="nav-button">Privacy Policy</a>
         <a href="{{ url_for('contact') }}" class="nav-button">Contact</a>
         <a href="{{ url_for('login') }}" class="nav-button">Login</a>
         <a href="{{ url_for('register') }}" class="nav-button">Register</a>
-        {% if user_name %}
-            Logged in as: {{ user_name }}
-        {% endif %}
-    </div>
     {% endblock %}
+
+    {% if user_name %}
+        Logged in as: {{ user_name }}
+    {% endif %}
+    </div>
+
     <div id = "landing-bg">
         <div id ="content">
             {% block content %}
