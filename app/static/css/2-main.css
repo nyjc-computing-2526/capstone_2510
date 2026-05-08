@@ -1,35 +1,31 @@
-.landing-bg {
-    background-image: url("static/images/landing2.png");
+#landing-bg {
+    background-image: url("../images/landing2.png");
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
+    padding-top: 100px; /* space for navbar */
 }
-
 
 .landing-nav {
-    position: absolute;
+    position: fixed; /* stays at top */
     top: 0;
+    left: 0;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 20px;
     padding: 20px 50px;
     box-sizing: border-box;
+    z-index: 1000;
 }
 
-.nav-links a {
-    margin-left: 20px;
-    text-decoration: none;
+#content {
+    position: relative;
+    margin-top: 80px; /* prevents overlap */
+    padding: 40px;
     color: black;
 }
-
-.content {
-    position: absolute;
-    top: 40%;
-    left: 10%;
-    color: black;
-}
-
 
 .nav-button {
     text-decoration: none;
