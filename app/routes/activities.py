@@ -1,4 +1,4 @@
-from flask import request, session, redirect
+from flask import request, session, redirect, url_for
 from services.render import render_template
 import services.activity_service as activity
 from app_obj import app
@@ -88,27 +88,26 @@ def delete_activity():
 
 @app.route('/activities/update', methods = ["GET", "POST"])
 def update_activity():
-    if request.method == "POST":
-        task_name = request.form["task_name"]
-        category = request.form["category"]
-        hours = int(request.form["hours"])
-        query = """
-    UPDATE "activity"
-    SET "hours" = ?,
-    category = ?
-    WHERE assignment_id = ?;
-    """
-        params = [hours, category, task_name]
-        try:
-            conn = sqlite3.connect("capstone.db")
-            cursor = conn.cursor()
-            cursor.execute(query, params)
-            conn.commit()
-        except Exception as e:
-            print(f'Database error: {e}')
-        finally:
-            conn.close()
+    id = request.args.get('id', None)
+    if id is None:
+        return redirect("activities")
 
-        msg = ["Successful", task_name, category, hours]
-        return render_template('activities/edit.html', msg = msg) 
-    return render_template("activities/edit.html")
+    if request.method == "POST":
+        data = {
+            "id": id,
+            "title": request.form["title"],
+            "date": dt.date.fromisoformat(request.form["date"]), 
+            "start_time": dt.time.fromisoformat(request.form["start_time"]),
+            "end_time": dt.time.fromisoformat(request.form["end_time"]),
+            "description": request.form["description"]
+        }
+
+        activity.update_activity(**data)
+        return redirect(url_for("update_activity", id = id, msg = "success"))
+
+    data = activity.get_activity(id)
+    data["date"] = str(data["date"])
+    data["start_time"] = str(data["start_time"])
+    data["end_time"] = str(data["end_time"])
+
+    return render_template("activities/edit.html", id = id, msg = request.args.get('msg', None), data = data)

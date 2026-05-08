@@ -7,38 +7,43 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST">
+<form action="{{ url_for('update_activity', id=id) }}" method="POST"
 <table>
 	<tr>
 		<td><label for="Title">Activity Title:</label></td>
-		<td><input name="Title" id="Title" type="text"></td>
+		<td><input name="title" value="{{ data['title'] }}" id="Title" type="text"></td>
 	</tr>
 
 	<tr>
 		<td><label for="Date">Date:</label></td>
-		<td><input name="Date" id="Date" type="date"></td>
+		<td><input name="date" value="{{ data['date'] }}" id="Date" type="date"></td>
 	</tr>
 
 	<tr>
 		<td><label for="StartTime">Start Time:</label></td>
-		<td><input name="StartTime" id="StartTime" type="time"></td>
+		<td><input name="start_time" value="{{ data['start_time'] }}" id="StartTime" type="time"></td>
 	</tr>
 
 	<tr>
 		<td><label for="EndTime">End Time:</label></td>
-		<td><input name="EndTime" id="EndTime" type="time"></td>
+		<td><input name="end_time" value="{{ data['end_time'] }}" id="EndTime" type="time"></td>
 	</tr>
 
 	<tr>
 		<td><label for="Description">Activity Description:</label></td>
-		<td><input name="Description" id="Description" type="text"></td>
+		<td><input name="description" value="{{ data['description'] }}" id="Description" type="text"></td>
 	</tr>
 
 	<tr>
 		<td></td>
-		<td><input type="submit" value="Create"></td>
+		<td><input type="submit" value="Submit"></td>
 	</tr>
 </table>
 </form>
+
+<br />
+{% if msg %}
+<div>{{msg}}</div>
+{% endif %}
 
 {% endblock %}
