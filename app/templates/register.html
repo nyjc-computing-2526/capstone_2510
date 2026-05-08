@@ -1,5 +1,47 @@
-<form method="POST">
-    <input name="email" placeholder="Email">
-    <input name="password" type="password" placeholder="Password">
-    <button type="submit">Register</button>
-</form>
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='static/css/1-main.css')}}">
+
+<script>
+function validate(event) {
+    // Check if both passwords match and prevent submission if they differ
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm_password").value;
+
+    if (password !== confirmPassword) {
+        event.preventDefault();
+        document.getElementById("msg").innerHTML = "Passwords do not match!"
+    }
+}
+</script>
+
+{% endblock %} 
+
+
+{% block header %}
+<h1>Register?</h1>
+{% endblock %}
+
+{% block content %}
+<h2>Register an account!</h2>
+<p>
+    <form method="POST">
+        Email: <input name="email" type="text"> <br />
+        Name: <input name="name" type="text"> <br />
+        Password: <input name="password" type="password"> <br />
+        Re-enter password: <input name="password_again" type="password">
+        <button type="submit">Register!</button>
+    </form> <br />
+
+    {% if msg %}
+        <p id="msg">
+            {{msg}}
+        </p>
+    {% endif %}
+</p>
+{% endblock %}

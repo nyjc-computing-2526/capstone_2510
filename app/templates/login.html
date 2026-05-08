@@ -1,5 +1,32 @@
-<form method="POST">
-    <input name="email" placeholder="Email">
-    <input name="password" type="password" placeholder="Password">
-    <button type="submit">Login</button>
-</form>
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='static/css/1-main.css')}}">
+{% endblock %} 
+
+
+{% block header %}
+<h1>Login</h1>
+{% endblock %}
+
+{% block content %}
+<h2>Log in to your account!</h2>
+<p>
+    <form method="POST">
+        Email: <input name="email" type="text"> <br />
+        Password: <input name="password" type="password">
+        <button type="submit">Login</button>
+    </form>
+</p>
+
+{% if msg %}
+    <p id="msg">
+        {{msg}}
+    </p>
+{% endif %}
+
+{% endblock %}
