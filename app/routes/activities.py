@@ -4,7 +4,8 @@ import sqlite3
 
 @app.route('/activities')
 def activities():
-    return render_template("activities.html")
+    
+    return render_template("activities.html", activities=activities)
 
 def valid_create(task_name, hours):
     if type(task_name) != str() or task_name == "":

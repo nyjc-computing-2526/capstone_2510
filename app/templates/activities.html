@@ -1,0 +1,17 @@
+{% extends 'base2.html' %}
+
+{% block title %} View Activities {% endblock %}
+
+{% block navbar %}
+    <div class="landing-nav">
+		<a href="{{ url_for('activities') }}" class="nav-button">View Activities</a>
+        <a href="{{ url_for('createact') }}" class="nav-button">Create Activity</a>
+        <a href="{{ url_for('deleteact') }}" class="nav-button">Delete Activity</a>
+        <a href="{{ url_for('updateact') }}" class="nav-button">Update Activity</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+<h1>My Activities</h1>
+
+{% endblock %}

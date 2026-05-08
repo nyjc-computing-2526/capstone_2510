@@ -48,6 +48,35 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
+table {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+td {
+    padding: 8px;
+}
+
+input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+input[type="submit"] {
+    background: #357ABD;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+input[type="submit"]:hover {
+    background: #2c5f9e;
+}
+
+
 /* privacy policy */
 .privacy-content {
     width: 60%;
