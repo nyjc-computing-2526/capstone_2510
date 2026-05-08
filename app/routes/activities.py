@@ -79,18 +79,12 @@ def create_activity():
 
 @app.route('/activities/delete', methods = ["POST"])
 def delete_activity():
-    query = "DELETE FROM activity WHERE task_name = ?;"
-    task_name = request.form["task_name"]
-    params = [task_name]
-    try:
-        conn = sqlite3.connect("capstone.db")
-        cursor = conn.cursor()
-        cursor.execute(query, params)
-        conn.commit()
-    except Exception as e:
-        print(f'Database error: {e}')
-    finally:
-        conn.close()
+    id = request.args.get('id', None)
+    if id is not None:
+        id = int(id)
+        activity.delete_activity(id)
+
+    return redirect("/activities")
 
 @app.route('/activities/update', methods = ["GET", "POST"])
 def update_activity():
