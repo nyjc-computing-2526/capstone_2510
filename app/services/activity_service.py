@@ -1,29 +1,32 @@
 """
-Functions for managing users.
+Functions for managing activities.
 To run properly, go into the app folder and do
-    python3 -m services.auth_service
+    python3 -m services.activity_service
     or, within the app folder
-    import services.auth_service
+    import services.activity_service
 
-User schema:
-- name: str, name of user. 
-    - Advise users to include (XXXX) where X is a number for class.
-- email: str, internally used as primary key
-- password: str
+Activity schema:
+- id: int, internal DB id
+- creator_id: int, foreign key to user
+- title: str
+- date: datetime.date
+- start_time: datetime.time
+- description: str 
 """
 
 from db import db_execute
-import bcrypt
+import datetime as dt
 
 def init_db():
     """
-    Construct table for users.
+    Construct table for activities.
     Assumes completely empty postgres installation.
     """
     query = """
     CREATE TABLE users (
+        id SERIAL PRIMARY KEY,
         name VARCHAR(255),
-        email VARCHAR(255) PRIMARY KEY,
+        email VARCHAR(255) UNIQUE,
         password VARCHAR(255)
     );
     """
@@ -33,9 +36,6 @@ if __name__ == "__main__":
     prompt = input("Press enter to initialise users table. This action assumes no users table is present.")
     if not prompt:
         init_db()
-        print("done")
-    else:
-        print("doing nothing.")
 
 def pw_hash(password: str) -> str:
     """
@@ -61,7 +61,7 @@ def create_user(name: str, email: str, password: str):
     Password is plaintext in this context.
     """
     db_execute(
-        "INSERT INTO users VALUES (%s, %s, %s)",
+        "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)",
         (name, email, pw_hash(password))
     )
 
@@ -80,7 +80,7 @@ def get_user(email: str) -> list|None:
     """
     Fetches user info for provided email.
     If user does not exist, returns None.
-    returns {name, email, passsword}
+    returns {id, name, email, passsword}
     """
     _, result = db_execute(
         "SELECT * FROM users WHERE email = %s",
@@ -92,7 +92,8 @@ def get_user(email: str) -> list|None:
     else:
         user = result[0]
         return {
-            "name": user[0],
-            "email": user[1],
-            "password": user[2]
+            "id": user[0],
+            "name": user[1],
+            "email": user[2],
+            "password": user[3]
         }

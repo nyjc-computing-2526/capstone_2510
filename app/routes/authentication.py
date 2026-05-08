@@ -1,5 +1,5 @@
 
-from flask import Flask, request, redirect, session
+from flask import Flask, request, redirect, session, url_for
 from services.render import render_template
 from services.auth_service import create_user, email_exists, get_user, check_pw
 from app_obj import app
@@ -19,7 +19,7 @@ def register():
             return render_template("register.html", msg="Email already exists!")
 
         create_user(name, email, password)
-        return redirect("/login", msg="Registration successful. Please log in")
+        return redirect(url_for("login", msg="Registration successful. Please log in"))
     else:
         return render_template("register.html")
 
@@ -41,14 +41,13 @@ def login():
             return render_template("login.html", msg="Wrong Password!")
 
         #store session
-        session["user_id"] = user["id"]
         session["name"] = user["name"]
         session["email"] = user["email"]
         session["logged_in"] = True
 
         return redirect("/activities")
 
-    return render_template("login.html")
+    return render_template("login.html", msg = request.args.get('msg', None))
 
 @app.route("/logout")
 def logout():
