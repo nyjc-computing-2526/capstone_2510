@@ -2,6 +2,7 @@ from flask import request, session, redirect
 from services.render import render_template
 import services.activity_service as activity
 from app_obj import app
+import datetime as dt
 from typing import Callable
 import sqlite3
 
@@ -29,7 +30,7 @@ def activities():
     email = session["email"]
     ids = activity.email_lookup(email)
 
-    headers = ["title", "date", "start_time", "end_time", "description"]
+    headers = ["id", "title", "date", "start_time", "end_time", "description"]
 
     entries = []
     for id in ids:
@@ -45,35 +46,35 @@ def activities():
 
     return render_template("activities/activities.html", entries = entries)
 
-def valid_create(task_name, hours):
-    if type(task_name) != str() or task_name == "":
+def valid_create(task_name, description) -> bool:
+    """
+    Validate an activity to be created.
+    Checks task_name and description only for now.
+    """
+    if type(task_name) != str or task_name == "":
         return False
-    #category will be a dropdown box, no way to get error
-    if type(hours) != float or hours <= 0:
+    if type(description) != str or description == "":
         return False
     return True
 
 @app.route('/activities/create', methods = ["GET", "POST"])
 def create_activity():
     if request.method == "POST":
-        task_name = request.form["task_name"]
-        category = request.form["category"]
-        hours = int(request.form["hours"])
-        valid = valid_create(task_name, hours)
+        data = {
+            "email": session["email"],
+            "title": request.form["title"],
+            "date": dt.date.fromisoformat(request.form["date"]), 
+            "start_time": dt.time.fromisoformat(request.form["start_time"]),
+            "end_time": dt.time.fromisoformat(request.form["end_time"]),
+            "description": request.form["description"]
+        }
+
+        valid = valid_create(data["title"], data["description"])
+        if not valid:
+            return render_template("activities/create.html", msg="Invalid creation!")
         if valid:
-            query = """INSERT INTO activity (task_name, category, hours)
-            VALUES (?, ?, ?)"""
-            params = [task_name, category, hours]
-            try:
-                conn = sqlite3.connect("capstone.db")
-                cursor = conn.cursor()
-                cursor.execute(query, params)
-                conn.commit()
-            except Exception as e:
-                print(f'Database error: {e}')
-            finally:
-                conn.close()
-            msg = ["Successful", task_name, category, hours]
+            activity.create_activity(**data)
+            return render_template("activities/create.html", msg="Success!")
     return render_template("activities/create.html")
 
 @app.route('/activities/delete', methods = ["POST"])

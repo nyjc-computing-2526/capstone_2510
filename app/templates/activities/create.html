@@ -11,27 +11,27 @@
 <table>
 	<tr>
 		<td><label for="Title">Activity Title:</label></td>
-		<td><input name="Title" id="Title" type="text"></td>
+		<td><input name="title" id="Title" type="text"></td>
 	</tr>
 
 	<tr>
 		<td><label for="Date">Date:</label></td>
-		<td><input name="Date" id="Date" type="date"></td>
+		<td><input name="date" id="Date" type="date"></td>
 	</tr>
 
 	<tr>
 		<td><label for="StartTime">Start Time:</label></td>
-		<td><input name="StartTime" id="StartTime" type="time"></td>
+		<td><input name="start_time" id="StartTime" type="time"></td>
 	</tr>
 
 	<tr>
 		<td><label for="EndTime">End Time:</label></td>
-		<td><input name="EndTime" id="EndTime" type="time"></td>
+		<td><input name="end_time" id="EndTime" type="time"></td>
 	</tr>
 
 	<tr>
 		<td><label for="Description">Activity Description:</label></td>
-		<td><input name="Description" id="Description" type="text"></td>
+		<td><input name="description" id="Description" type="text"></td>
 	</tr>
 
 	<tr>
@@ -40,5 +40,10 @@
 	</tr>
 </table>
 </form>
+
+<br />
+{% if msg %}
+	{{msg}}
+{% endif %}
 
 {% endblock %}

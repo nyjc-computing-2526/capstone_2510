@@ -12,17 +12,27 @@
                 {{header}}
             </th>
         {% endfor %}
+
+        <th> Actions </th>
     </tr>
 
     {% for entry in entries %}
         <tr>
-            {% for item in entry %}
+            {% for item in entry[1:] %}
                 <td>
                     {{item}}
                 </td>
             {% endfor %}
+
+            <td>
+                <a href="{{ url_for('update_activity', id=entry[0]) }}" class="nav-button">Edit</a>
+                <a href="{{ url_for('delete_activity', id=entry[0]) }}" class="nav-button">Delete</a>
+            </td>
         </tr>
+
     {% endfor %}
-</table>
+</table> <br />
+
+<a href="{{ url_for('create_activity') }}" class="nav-button">+ Create activity</a>
 
 {% endblock %}
