@@ -7,7 +7,7 @@ To run properly, go into the app folder and do
 
 Activity schema:
 - id: int, internal DB id
-- user_email: str, foreign key to user
+- email: str, foreign key to user
 - title: str
 - date: datetime.date
 - start_time: datetime.time
@@ -26,14 +26,14 @@ def init_db():
     query = """
     CREATE TABLE activities (
         id SERIAL,
-        user_email VARCHAR(255),
+        email VARCHAR(255),
         title VARCHAR(255),
         date DATE,
         start_time TIME,
         end_time TIME,
         description VARCHAR(1023),
         PRIMARY KEY (id),
-        FOREIGN KEY (user_email) REFERENCES users(email)
+        FOREIGN KEY (email) REFERENCES users(email)
     );
     """
     db_execute(query)
@@ -42,64 +42,138 @@ if __name__ == "__main__":
     prompt = input("Press enter to initialise activities table. This action assumes no activities table is present.")
     if not prompt:
         init_db()
+        print("done")
+    else:
+        print("doing nothing.")
 
-def pw_hash(password: str) -> str:
+def create_activity(
+    email: str,
+    title: str,
+    date: dt.date, 
+    start_time: dt.time, 
+    end_time: dt.time, 
+    description: str
+):
     """
-    Hash the given password with bcrypt.
-    Uses a random salt
-    """
-    data = password.encode("utf-8")
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(data, salt)
-    return str(hashed, encoding = "ascii")
-
-def check_pw(hashed: str, attempt_plain: str) -> bool:
-    """
-    Pass in a password hash and the plaintext attempt.
-    Returns True if matches, False otherwise.
-    """
-    data = attempt_plain.encode("utf-8")
-    return bcrypt.checkpw(data, hashed.encode("ascii"))
-
-def create_user(name: str, email: str, password: str):
-    """
-    Creates a new user.
-    Password is plaintext in this context.
+    Creates a new activity.
     """
     db_execute(
-        "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)",
-        (name, email, pw_hash(password))
+        """
+        INSERT INTO activities (
+            email, title, date, start_time, end_time, description
+        ) VALUES (%s, %s, %s, %s, %s, %s)
+        """,
+        (email, title, date, start_time, end_time, description)
     )
 
-def email_exists(email: str):
+def email_lookup(email: str) -> list:
     """
-    Check if the provided email has a registered account.
+    Fetches id of all activities under given email.
+    returns list of ints
     """
-    _, result = db_execute(
-        "SELECT * FROM users WHERE email = %s",
+    _, data = db_execute(
+        "SELECT id FROM activities WHERE email = %s",
         (email,)
     )
 
-    return len(result) > 0
+    result = []
+    for item in data:
+        result.append(item[0])
+    return result
 
-def get_user(email: str) -> list|None:
+def get_activity(id: int) -> list|None:
     """
-    Fetches user info for provided email.
-    If user does not exist, returns None.
-    returns {id, name, email, passsword}
+    Fetches activity info for provided id.
+    If activity does not exist, returns None.
+    returns {id, email, title, date, start_time, end_time, description}
     """
     _, result = db_execute(
-        "SELECT * FROM users WHERE email = %s",
-        (email,)
+        "SELECT * FROM activities WHERE id = %s",
+        (id,)
     )
 
     if len(result) == 0:
         return None
     else:
-        user = result[0]
-        return {
-            "id": user[0],
-            "name": user[1],
-            "email": user[2],
-            "password": user[3]
-        }
+        data = result[0]
+        headers = ["id", "email", "title", "date", "start_time", "end_time", "description"]
+        result = {}
+        for name, entry in zip(headers, data):
+            result[name] = entry
+
+        return result
+
+def delete_activity(id: int):
+    """
+    Delete activity with the given id
+    """
+    db_execute(
+        """
+        DELETE FROM activities WHERE id=%s
+        """,
+        (id,)
+    )
+
+def update_activity(
+    id: int,
+    title: str,
+    date: dt.date, 
+    start_time: dt.time, 
+    end_time: dt.time, 
+    description: str
+):
+    """
+    Updates the existing user that possesses given ID.
+    Password is plaintext in this context.
+    """
+    db_execute(
+        """
+        UPDATE activities 
+        SET 
+            title = %s,
+            date = %s,
+            start_time = %s, 
+            end_time = %s,
+            description = %s
+        WHERE id = %s;
+        """,
+        (title, date, start_time, end_time, description, id)
+    )
+
+def test_module():
+    """
+    Creates a test event under balls@ball.com.
+    """
+    email = "balls@ball.com"
+    event = {
+        "email": email,
+        "title": "Balling",
+        "date": dt.date.fromisoformat("2026-02-11"), # The browser input gives in this format alr.
+        "start_time": dt.time.fromisoformat("06:00"), # Same here
+        "end_time": dt.time.fromisoformat("08:00"),
+        "description": "Balls balls balls balls"
+    }
+
+    print("Creating two copies of event...")
+    create_activity(**event)
+    create_activity(**event)
+
+    print("Doing lookup of ids under email")
+    ids = email_lookup(email)
+
+    print("Deleting one copy")
+    delete_activity(ids[-1])
+    real_id = ids[-2]
+
+    print("Fetching other copy")
+    data = get_activity(real_id)
+
+    print("Editing copy")
+    del data["email"]
+    del data["id"]
+    data["end_time"] = dt.time.fromisoformat("07:00")
+    update_activity(real_id, **data)
+
+if __name__ == "__main__":
+    print("Running test... Ensure balls@ball.com has an account")
+    test_module()
