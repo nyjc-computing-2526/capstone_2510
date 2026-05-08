@@ -7,10 +7,11 @@ To run properly, go into the app folder and do
 
 Activity schema:
 - id: int, internal DB id
-- creator_id: int, foreign key to user
+- user_email: str, foreign key to user
 - title: str
 - date: datetime.date
 - start_time: datetime.time
+- end_time: datetime.time
 - description: str 
 """
 
@@ -23,17 +24,22 @@ def init_db():
     Assumes completely empty postgres installation.
     """
     query = """
-    CREATE TABLE users (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255),
-        email VARCHAR(255) UNIQUE,
-        password VARCHAR(255)
+    CREATE TABLE activities (
+        id SERIAL,
+        user_email VARCHAR(255),
+        title VARCHAR(255),
+        date DATE,
+        start_time TIME,
+        end_time TIME,
+        description VARCHAR(1023),
+        PRIMARY KEY (id),
+        FOREIGN KEY (user_email) REFERENCES users(email)
     );
     """
     db_execute(query)
 
 if __name__ == "__main__":
-    prompt = input("Press enter to initialise users table. This action assumes no users table is present.")
+    prompt = input("Press enter to initialise activities table. This action assumes no activities table is present.")
     if not prompt:
         init_db()
 
