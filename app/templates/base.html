@@ -29,7 +29,9 @@
     {% endblock %}
 
     {% if user_name %}
-        Logged in as: {{ user_name }}
+        <a href="{{ url_for('logout') }}" class="user-box">
+        Log out || {{ user_name }}
+        </a>
     {% endif %}
     </div>
 

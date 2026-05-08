@@ -5,8 +5,7 @@ import sqlite3
 
 @app.route('/activities')
 def activities():
-    
-    return render_template("activities.html", activities=activities)
+    return render_template("activities/activities.html", activities=activities)
 
 def valid_create(task_name, hours):
     if type(task_name) != str() or task_name == "":
@@ -17,7 +16,7 @@ def valid_create(task_name, hours):
     return True
 
 @app.route('/activities/create', methods = ["GET", "POST"])
-def createact():
+def create_activity():
     if request.method == "POST":
         task_name = request.form["task_name"]
         category = request.form["category"]
@@ -37,10 +36,10 @@ def createact():
             finally:
                 conn.close()
             msg = ["Successful", task_name, category, hours]
-    return render_template("createactivities.html")
+    return render_template("activities/create.html")
 
 @app.route('/activities/delete', methods = ["POST"])
-def deleteact():
+def delete_activity():
     query = "DELETE FROM activity WHERE task_name = ?;"
     task_name = request.form["task_name"]
     params = [task_name]
@@ -55,7 +54,7 @@ def deleteact():
         conn.close()
 
 @app.route('/activities/update', methods = ["GET", "POST"])
-def updateact():
+def update_activity():
     if request.method == "POST":
         task_name = request.form["task_name"]
         category = request.form["category"]
@@ -78,5 +77,5 @@ def updateact():
             conn.close()
 
         msg = ["Successful", task_name, category, hours]
-        return render_template('updateactivities.html', msg = msg) 
-    return render_template("updateactivities.html")
+        return render_template('activities/edit.html', msg = msg) 
+    return render_template("activities/edit.html")

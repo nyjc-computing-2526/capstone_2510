@@ -6,10 +6,9 @@ To run properly, go into the app folder and do
     import services.auth_service
 
 User schema:
-- id: int, internal DB id
 - name: str, name of user. 
     - Advise users to include (XXXX) where X is a number for class.
-- email: str
+- email: str, internally used as primary key
 - password: str
 """
 
@@ -23,9 +22,8 @@ def init_db():
     """
     query = """
     CREATE TABLE users (
-        id SERIAL PRIMARY KEY,
         name VARCHAR(255),
-        email VARCHAR(255) UNIQUE,
+        email VARCHAR(255) PRIMARY KEY,
         password VARCHAR(255)
     );
     """
@@ -60,7 +58,7 @@ def create_user(name: str, email: str, password: str):
     Password is plaintext in this context.
     """
     db_execute(
-        "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)",
+        "INSERT INTO users VALUES (%s, %s, %s)",
         (name, email, pw_hash(password))
     )
 
@@ -79,7 +77,7 @@ def get_user(email: str) -> list|None:
     """
     Fetches user info for provided email.
     If user does not exist, returns None.
-    returns {id, name, email, passsword}
+    returns {name, email, passsword}
     """
     _, result = db_execute(
         "SELECT * FROM users WHERE email = %s",
@@ -91,8 +89,7 @@ def get_user(email: str) -> list|None:
     else:
         user = result[0]
         return {
-            "id": user[0],
-            "name": user[1],
-            "email": user[2],
-            "password": user[3]
+            "name": user[0],
+            "email": user[1],
+            "password": user[2]
         }
