@@ -22,8 +22,10 @@
         <a href="{{ url_for('landing') }}" class="nav-button">Home</a>
         <a href="{{ url_for('privacy') }}" class="nav-button">Privacy Policy</a>
         <a href="{{ url_for('contact') }}" class="nav-button">Contact</a>
-        <a href="{{ url_for('login') }}" class="nav-button">Login</a>
-        <a href="{{ url_for('register') }}" class="nav-button">Register</a>
+        {% if not user_name %}
+            <a href="{{ url_for('login') }}" class="nav-button">Login</a>
+            <a href="{{ url_for('register') }}" class="nav-button">Register</a>
+        {% endif %}
     {% endblock %}
 
     {% if user_name %}
