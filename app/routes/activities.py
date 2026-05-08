@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, request
+from services.render import render_template
 from app_obj import app
 import sqlite3
 

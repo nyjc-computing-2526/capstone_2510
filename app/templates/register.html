@@ -7,19 +7,6 @@ Home
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='static/css/1-main.css')}}">
 
-<script>
-function validate(event) {
-    // Check if both passwords match and prevent submission if they differ
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirm_password").value;
-
-    if (password !== confirmPassword) {
-        event.preventDefault();
-        document.getElementById("msg").innerHTML = "Passwords do not match!"
-    }
-}
-</script>
-
 {% endblock %} 
 
 

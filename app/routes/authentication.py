@@ -1,5 +1,6 @@
 
-from flask import Flask, request, render_template, redirect, session
+from flask import Flask, request, redirect, session
+from services.render import render_template
 from services.auth_service import create_user, email_exists, get_user, check_pw
 from app_obj import app
 
@@ -41,10 +42,11 @@ def login():
 
         #store session
         session["user_id"] = user["id"]
+        session["name"] = user["name"]
         session["email"] = user["email"]
         session["logged_in"] = True
 
-        return redirect("/activity")
+        return redirect("/activities")
 
     return render_template("login.html")
 

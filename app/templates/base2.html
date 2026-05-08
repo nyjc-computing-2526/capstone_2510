@@ -26,8 +26,12 @@
         <a href="{{ url_for('logout')}}" class="nav-button"> Log Out</a>
     </div>
     {% endblock %}
+
     <div id = "landing-bg">
         <div id ="content">
+            {% if user_name %}
+                Logged in as: {{ user_name }}
+            {% endif %}
             {% block content %}
             {% endblock %}
         </div>

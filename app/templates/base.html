@@ -24,6 +24,9 @@
         <a href="{{ url_for('contact') }}" class="nav-button">Contact</a>
         <a href="{{ url_for('login') }}" class="nav-button">Login</a>
         <a href="{{ url_for('register') }}" class="nav-button">Register</a>
+        {% if user_name %}
+            Logged in as: {{ user_name }}
+        {% endif %}
     </div>
     {% endblock %}
     <div id = "landing-bg">

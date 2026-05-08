@@ -1,4 +1,5 @@
-from flask import request, render_template, redirect, session
+from flask import request, redirect, session
+from services.render import render_template
 from app_obj import app
 
 @app.route("/")
