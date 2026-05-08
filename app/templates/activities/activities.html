@@ -2,11 +2,27 @@
 
 {% block title %} View Activities {% endblock %}
 
-{% block navbar %}
-    {% include "activities/nav.html" %}
-{% endblock %}
-
 {% block content %}
 <h1>All Activities</h1>
+
+<table>
+    <tr>
+        {% for header in ["Title", "Date", "Start time", "End time", "description"] %}
+            <th>
+                {{header}}
+            </th>
+        {% endfor %}
+    </tr>
+
+    {% for entry in entries %}
+        <tr>
+            {% for item in entry %}
+                <td>
+                    {{item}}
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
 
 {% endblock %}

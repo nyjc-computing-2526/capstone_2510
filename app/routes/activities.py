@@ -1,11 +1,49 @@
-from flask import Flask, request
+from flask import request, session, redirect
 from services.render import render_template
+import services.activity_service as activity
 from app_obj import app
+from typing import Callable
 import sqlite3
 
+def require_login(inner_fn: Callable):
+    """
+    Decorator function around a route.
+    Adding it makes the route redirect user to login page if not logged in.
+    Effectively disables access to those paths.
+    """
+    def route(*args, **kwargs):
+        nonlocal inner_fn
+        if "logged_in" not in session:
+            return redirect("/")
+        else:
+            return inner_fn(*args, **kwargs)
+    route.__name__ = inner_fn.__name__ # Carry over so that url_for works
+    return route
+
 @app.route('/activities')
+@require_login
 def activities():
-    return render_template("activities/activities.html", activities=activities)
+    """
+    Render page that shows all activities.
+    """
+    email = session["email"]
+    ids = activity.email_lookup(email)
+
+    headers = ["title", "date", "start_time", "end_time", "description"]
+
+    entries = []
+    for id in ids:
+        data = activity.get_activity(id)
+        data["date"] = str(data["date"])
+        data["start_time"] = str(data["start_time"])
+        data["end_time"] = str(data["end_time"])
+
+        entry = []
+        for header in headers:
+            entry.append(data[header])
+        entries.append(entry)
+
+    return render_template("activities/activities.html", entries = entries)
 
 def valid_create(task_name, hours):
     if type(task_name) != str() or task_name == "":

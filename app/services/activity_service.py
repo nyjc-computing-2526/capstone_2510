@@ -100,7 +100,7 @@ def get_activity(id: int) -> list|None:
         result = {}
         for name, entry in zip(headers, data):
             result[name] = entry
-
+        
         return result
 
 def delete_activity(id: int):
